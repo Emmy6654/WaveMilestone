@@ -9,6 +9,9 @@ fn test_create_milestone_pool_success() {
     let pool_size = DEFAULT_POOL_FUNDS;
 
     ctx.token_client().mint(&ctx.maintainer, &pool_size);
+#89-Add-CI-check-for-Soroban-contract-build-FIX
+    ctx.client().create_milestone_pool(&ctx.maintainer, &ctx.guard_id, &ctx.token_id, &pool_size, &ctx.expiry);
+
     ctx.client().create_milestone_pool(
         &ctx.maintainer,
         &ctx.guard_id,
@@ -16,6 +19,7 @@ fn test_create_milestone_pool_success() {
         &pool_size,
         &ctx.expiry,
     );
+ main
 
     let balance = ctx.client().milestone_balance();
     assert_eq!(balance, pool_size);
@@ -32,13 +36,8 @@ fn test_create_milestone_pool_success() {
 fn test_create_pool_rejects_zero_amount() {
     let ctx = TestContext::new();
 
-    let result = ctx.client().try_create_milestone_pool(
-        &ctx.maintainer,
-        &ctx.guard_id,
-        &ctx.token_id,
-        &0u128,
-        &ctx.expiry,
-    );
+    let result =
+        ctx.client().try_create_milestone_pool(&ctx.maintainer, &ctx.guard_id, &ctx.token_id, &0u128, &ctx.expiry);
 
     assert_eq!(result.err().unwrap(), Ok(Error::InvalidAmount));
 }
@@ -50,13 +49,8 @@ fn test_create_pool_rejects_unauthorized() {
 
     ctx.token_client().mint(&ctx.stranger, &pool_size);
 
-    let result = ctx.client().try_create_milestone_pool(
-        &ctx.stranger,
-        &ctx.guard_id,
-        &ctx.token_id,
-        &pool_size,
-        &ctx.expiry,
-    );
+    let result =
+        ctx.client().try_create_milestone_pool(&ctx.stranger, &ctx.guard_id, &ctx.token_id, &pool_size, &ctx.expiry);
 
     assert_eq!(result.err().unwrap(), Ok(Error::UnauthorizedMaintainer));
 }
@@ -69,13 +63,8 @@ fn test_create_pool_rejects_past_expiry() {
 
     ctx.token_client().mint(&ctx.maintainer, &pool_size);
 
-    let result = ctx.client().try_create_milestone_pool(
-        &ctx.maintainer,
-        &ctx.guard_id,
-        &ctx.token_id,
-        &pool_size,
-        &past_expiry,
-    );
+    let result =
+        ctx.client().try_create_milestone_pool(&ctx.maintainer, &ctx.guard_id, &ctx.token_id, &pool_size, &past_expiry);
 
     assert_eq!(result.err().unwrap(), Ok(Error::ExpiryInPast));
 }
