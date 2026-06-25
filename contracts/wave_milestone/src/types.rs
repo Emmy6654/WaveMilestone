@@ -92,7 +92,6 @@ pub trait WaveGuardInterface {
 /// Standard Stellar Asset Contract (SAC) token interface.
 #[contractclient(name = "TokenClient")]
 pub trait TokenInterface {
-    fn transfer(env: Env, from: Address, to: Address, amount: u128);
-    fn balance(env: Env, id: Address) -> u128;
-    fn xfer(env: Env, from: Address, to: Address, amount: i128);
+    fn transfer(env: Env, from: Address, to: Address, amount: i128);
+    fn balance(env: Env, id: Address) -> i128;
 }
