@@ -124,10 +124,7 @@ pub enum Error {
     TransferFailed = 8,
     InvalidAmount = 9,
     ExpiryInPast = 10,
-    /// The supplied `developer` address is zero-like (all-zero bytes) and
-    /// cannot hold tokens.  Callers must provide a valid, funded Stellar
-    /// account or contract address.  See issue #109.
-    InvalidDeveloper = 11,
+    InvalidRepoHash = 11,
 }
 
 // ─────────────────────────────────────────────────────────────

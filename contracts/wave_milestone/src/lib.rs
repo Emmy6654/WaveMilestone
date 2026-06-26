@@ -213,6 +213,11 @@ impl WaveMilestoneContract {
         // ── Authentication ──
         maintainer.require_auth();
 
+        // ── repo_hash validation ──
+        if repo_hash == BytesN::from_array(&env, &[0u8; 32]) {
+            return Err(Error::InvalidRepoHash);
+        }
+
         // ── Load pool ──
         let mut pool = env
             .storage()
